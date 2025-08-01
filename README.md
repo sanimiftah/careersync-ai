@@ -60,8 +60,6 @@ Visit the live demo: **[https://sanimiftah.github.io/careersync-ai/](https://san
 
 ### Option 2: Run Locally
 
-### Option 2: Run Locally
-
 1. **Clone the repository**
    ```bash
    git clone https://github.com/sanimiftah/careersync-ai.git
