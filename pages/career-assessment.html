@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Career Assessment - CareerSync AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="../assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="../index.html" class="text-2xl font-bold text-blue-600">CareerSync AI</a>
+        </div>
+        
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="../index.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+            <a href="#assessment" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Assessment</a>
+            <button onclick="goBack()" class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors">
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Assessment Header -->
+  <section class="bg-gradient-to-r from-blue-600 to-purple-600 py-16 text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">AI Career Assessment</h1>
+      <p class="text-xl mb-8">Discover your ideal career path with our comprehensive AI-powered assessment</p>
+      <div class="bg-white bg-opacity-20 rounded-lg p-6 max-w-2xl mx-auto">
+        <div class="flex items-center justify-center space-x-8 text-sm">
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            15-20 minutes
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+            </svg>
+            Detailed Report
+          </div>
+          <div class="flex items-center">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+            AI-Powered
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Assessment Container -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Progress Bar -->
+      <div class="mb-8">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-sm font-medium text-gray-700">Assessment Progress</span>
+          <span class="text-sm font-medium text-gray-700" id="progressText">0% Complete</span>
+        </div>
+        <div class="w-full bg-gray-200 rounded-full h-2">
+          <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: 0%" id="progressBar"></div>
+        </div>
+      </div>
+
+      <!-- Welcome Screen -->
+      <div id="welcomeScreen" class="bg-white rounded-xl shadow-lg p-8">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Discover Your Career Path?</h2>
+          <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+            Our AI-powered assessment evaluates your interests, skills, personality, and goals to recommend personalized career paths that align with your unique profile.
+          </p>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            <div class="bg-gray-50 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">What You'll Get:</h3>
+              <ul class="text-left space-y-2 text-gray-700">
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                  Personalized career recommendations
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                  Skills assessment and development plan
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                  Industry insights and salary projections
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+                  Learning path recommendations
+                </li>
+              </ul>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-6">
+              <h3 class="text-lg font-semibold text-gray-900 mb-3">Assessment Sections:</h3>
+              <ul class="text-left space-y-2 text-gray-700">
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                  Interests & Preferences
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                  Skills & Competencies
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                  Personality Traits
+                </li>
+                <li class="flex items-center">
+                  <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+                  Career Goals & Values
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <button onclick="startAssessment()" class="bg-blue-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-colors">
+            Start Assessment
+          </button>
+        </div>
+      </div>
+
+      <!-- Assessment Questions Container -->
+      <div id="assessmentContainer" class="hidden">
+        <!-- Questions will be dynamically loaded here -->
+      </div>
+
+      <!-- Results Screen -->
+      <div id="resultsScreen" class="hidden bg-white rounded-xl shadow-lg p-8">
+        <div class="text-center mb-8">
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Assessment Complete!</h2>
+          <p class="text-lg text-gray-600 mb-8">Your personalized career report is ready</p>
+        </div>
+
+        <div id="resultsContent">
+          <!-- Results will be dynamically generated here -->
+        </div>
+
+        <div class="text-center mt-8">
+          <button onclick="downloadReport()" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mr-4">
+            Download Report
+          </button>
+          <button onclick="retakeAssessment()" class="bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-700 transition-colors">
+            Retake Assessment
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="../assets/js/career-assessment.js"></script>
+</body>
+</html>

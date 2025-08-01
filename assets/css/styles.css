@@ -1,0 +1,312 @@
+/* Custom CSS for CareerSync AI */
+
+/* Root Variables */
+:root {
+  --primary-blue: #3B82F6;
+  --primary-green: #10B981;
+  --accent-purple: #8B5CF6;
+  --gray-neutral: #6B7280;
+  --gray-dark: #374151;
+  --gray-light: #F9FAFB;
+}
+
+/* Custom Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  line-height: 1.6;
+  color: var(--gray-dark);
+}
+
+/* Typography Enhancements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* Button Enhancements */
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue), #2563EB);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-transform: capitalize;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -8px rgba(59, 130, 246, 0.5);
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--primary-green), #059669);
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px -8px rgba(16, 185, 129, 0.5);
+}
+
+/* Card Enhancements */
+.card-hover {
+  transition: all 0.3s ease;
+  border: 1px solid #E5E7EB;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  border-color: var(--primary-blue);
+}
+
+/* Loading States */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Modal Enhancements */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  animation: fadeInUp 0.3s ease;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* Form Enhancements */
+.form-input {
+  border: 2px solid #E5E7EB;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--gray-dark);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Progress Indicators */
+.progress-bar {
+  height: 8px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-blue), var(--primary-green));
+  transition: width 0.5s ease;
+}
+
+/* Status Badges */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-success {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--primary-green);
+}
+
+.badge-warning {
+  background: rgba(245, 158, 11, 0.1);
+  color: #D97706;
+}
+
+.badge-info {
+  background: rgba(59, 130, 246, 0.1);
+  color: var(--primary-blue);
+}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+    line-height: 1.1;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.25rem;
+  }
+  
+  .card-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+/* Accessibility Enhancements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Focus Styles */
+button:focus,
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-neutral);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-dark);
+}
+
+/* Print Styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  h1, h2, h3 {
+    page-break-after: avoid;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --gray-light: #1F2937;
+    --gray-dark: #F9FAFB;
+  }
+}
+
+/* Animation Classes */
+.animate-fadeIn {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-slideIn {
+  animation: slideInRight 0.6s ease forwards;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Utility Classes */
+.gradient-bg {
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.shadow-custom {
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

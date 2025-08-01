@@ -1,0 +1,364 @@
+// Student Dashboard JavaScript - Professional Version
+
+class StudentDashboard {
+  constructor() {
+    this.currentUser = JSON.parse(localStorage.getItem('careersync_user'));
+    this.init();
+  }
+
+  init() {
+    this.checkAuthentication();
+    this.loadUserData();
+    this.loadDashboardData();
+    this.setupEventListeners();
+  }
+
+  checkAuthentication() {
+    if (this.currentUser && this.currentUser.type !== 'student') {
+      window.location.href = '../index.html';
+      return;
+    }
+  }
+
+  loadUserData() {
+    const displayName = document.getElementById('userDisplayName');
+    const studentName = document.getElementById('studentName');
+    
+    if (displayName) {
+      displayName.textContent = this.currentUser.firstName;
+    }
+    if (studentName) {
+      studentName.textContent = this.currentUser.firstName;
+    }
+  }
+
+  loadDashboardData() {
+    this.loadCareerPaths();
+    this.loadSkills();
+    this.loadRecentActivity();
+    this.loadTopOpportunities();
+    this.loadUpcomingEvents();
+    this.updateStats();
+  }
+
+  loadCareerPaths() {
+    const container = document.getElementById('careerPathsList');
+    const careerPaths = [
+      {
+        title: 'Software Engineer',
+        match: 95,
+        description: 'Based on your computer science major and programming interests',
+        iconColor: 'blue',
+        skills: ['JavaScript', 'Python', 'React'],
+        avgSalary: '$85,000'
+      },
+      {
+        title: 'Data Scientist',
+        match: 88,
+        description: 'Your analytical skills and math background are a great fit',
+        iconColor: 'green',
+        skills: ['Python', 'SQL', 'Machine Learning'],
+        avgSalary: '$95,000'
+      },
+      {
+        title: 'Product Manager',
+        match: 82,
+        description: 'Combines your technical and communication skills',
+        iconColor: 'purple',
+        skills: ['Product Strategy', 'Agile', 'Analytics'],
+        avgSalary: '$110,000'
+      }
+    ];
+
+    container.innerHTML = careerPaths.map(path => `
+      <div class="p-4 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors cursor-pointer" onclick="viewCareerPath('${path.title}')">
+        <div class="flex items-start justify-between">
+          <div class="flex items-start space-x-3">
+            <div class="w-12 h-12 bg-${path.iconColor}-100 rounded-lg flex items-center justify-center">
+              <svg class="w-6 h-6 text-${path.iconColor}-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="font-semibold text-gray-900">${path.title}</h3>
+              <p class="text-sm text-gray-600 mb-2">${path.description}</p>
+              <div class="flex items-center space-x-4 text-sm">
+                <span class="text-green-600 font-medium">${path.match}% Match</span>
+                <span class="text-gray-500">${path.avgSalary} avg</span>
+              </div>
+              <div class="flex flex-wrap gap-1 mt-2">
+                ${path.skills.map(skill => `<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${skill}</span>`).join('')}
+              </div>
+            </div>
+          </div>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadSkills() {
+    const container = document.getElementById('skillsList');
+    const skills = [
+      {
+        name: 'JavaScript',
+        level: 75,
+        category: 'Programming',
+        status: 'In Progress',
+        nextStep: 'Complete React fundamentals course'
+      },
+      {
+        name: 'Python',
+        level: 60,
+        category: 'Programming',
+        status: 'Learning',
+        nextStep: 'Practice data structures'
+      },
+      {
+        name: 'Communication',
+        level: 40,
+        category: 'Soft Skills',
+        status: 'Needs Work',
+        nextStep: 'Join public speaking club'
+      },
+      {
+        name: 'Project Management',
+        level: 20,
+        category: 'Business',
+        status: 'Recommended',
+        nextStep: 'Take introductory course'
+      }
+    ];
+
+    container.innerHTML = skills.map(skill => `
+      <div class="p-4 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <h4 class="font-medium text-gray-900">${skill.name}</h4>
+            <p class="text-sm text-gray-600">${skill.category}</p>
+          </div>
+          <span class="badge ${skill.status === 'In Progress' ? 'badge-info' : skill.status === 'Learning' ? 'badge-warning' : skill.status === 'Needs Work' ? 'text-red-600' : 'badge-success'}">${skill.status}</span>
+        </div>
+        <div class="progress-bar mb-2">
+          <div class="progress-fill" style="width: ${skill.level}%"></div>
+        </div>
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-gray-600">${skill.level}% Complete</span>
+          <button onclick="improveSkill('${skill.name}')" class="text-blue-600 hover:text-blue-700 font-medium">
+            ${skill.nextStep}
+          </button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadRecentActivity() {
+    const container = document.getElementById('recentActivity');
+    const activities = [
+      {
+        type: 'assessment',
+        title: 'Completed Personality Assessment',
+        description: 'Your results show strong analytical and creative traits',
+        time: '2 hours ago',
+        iconType: 'check'
+      },
+      {
+        type: 'application',
+        title: 'Applied to Google Summer Internship',
+        description: 'Application submitted successfully',
+        time: '1 day ago',
+        iconType: 'document'
+      },
+      {
+        type: 'skill',
+        title: 'JavaScript Skill Level Updated',
+        description: 'Progressed from Beginner to Intermediate',
+        time: '3 days ago',
+        iconType: 'trending'
+      },
+      {
+        type: 'event',
+        title: 'Attended Tech Career Fair',
+        description: 'Connected with 5 companies',
+        time: '1 week ago',
+        iconType: 'users'
+      }
+    ];
+
+    const iconPaths = {
+      check: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+      document: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+      trending: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6',
+      users: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z'
+    };
+
+    container.innerHTML = activities.map(activity => `
+      <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg">
+        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPaths[activity.iconType]}"></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-medium text-gray-900">${activity.title}</h4>
+          <p class="text-sm text-gray-600">${activity.description}</p>
+          <p class="text-xs text-gray-400 mt-1">${activity.time}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadTopOpportunities() {
+    const container = document.getElementById('topOpportunities');
+    const opportunities = [
+      {
+        title: 'Google Software Engineer Intern',
+        company: 'Google',
+        type: 'Internship',
+        match: 95,
+        deadline: '2 weeks left'
+      },
+      {
+        title: 'Microsoft Product Manager Intern',
+        company: 'Microsoft',
+        type: 'Internship',
+        match: 88,
+        deadline: '1 month left'
+      },
+      {
+        title: 'Data Science Research Assistant',
+        company: 'University Lab',
+        type: 'Research',
+        match: 82,
+        deadline: '3 days left'
+      }
+    ];
+
+    container.innerHTML = opportunities.map(opp => `
+      <div class="p-3 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors cursor-pointer" onclick="viewOpportunity('${opp.title}')">
+        <div class="flex items-start justify-between">
+          <div>
+            <h4 class="font-medium text-gray-900 text-sm">${opp.title}</h4>
+            <p class="text-sm text-gray-600">${opp.company}</p>
+            <div class="flex items-center space-x-2 mt-1">
+              <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${opp.match}% Match</span>
+              <span class="text-xs text-gray-500">${opp.deadline}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadUpcomingEvents() {
+    const container = document.getElementById('upcomingEvents');
+    const events = [
+      {
+        title: 'Tech Career Fair',
+        date: 'Tomorrow',
+        time: '10:00 AM',
+        location: 'Student Center'
+      },
+      {
+        title: 'Resume Workshop',
+        date: 'Friday',
+        time: '2:00 PM',
+        location: 'Career Services'
+      },
+      {
+        title: 'Alumni Networking Event',
+        date: 'Next Monday',
+        time: '6:00 PM',
+        location: 'Virtual'
+      }
+    ];
+
+    container.innerHTML = events.map(event => `
+      <div class="p-3 border border-gray-200 rounded-lg">
+        <h4 class="font-medium text-gray-900 text-sm">${event.title}</h4>
+        <div class="text-xs text-gray-600 mt-1">
+          <p>${event.date} at ${event.time}</p>
+          <p>${event.location}</p>
+        </div>
+        <button onclick="addToCalendar('${event.title}')" class="text-xs text-blue-600 hover:text-blue-700 mt-2">
+          Add to Calendar
+        </button>
+      </div>
+    `).join('');
+  }
+
+  updateStats() {
+    // Update dashboard statistics
+    document.getElementById('completedAssessments').textContent = '3';
+    document.getElementById('careerMatches').textContent = '7';
+    document.getElementById('internshipOpportunities').textContent = '12';
+    document.getElementById('skillsToLearn').textContent = '5';
+    document.getElementById('profileProgress').textContent = '75%';
+  }
+
+  setupEventListeners() {
+    // Add event listeners for dashboard interactions
+  }
+}
+
+// Global Functions for onclick handlers
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.classList.toggle('hidden');
+}
+
+function logout() {
+  localStorage.removeItem('careersync_user');
+  window.location.href = '../index.html';
+}
+
+function viewCareerPath(pathTitle) {
+  alert(`Viewing details for ${pathTitle}. Full career path explorer coming soon!`);
+}
+
+function takeSkillAssessment() {
+  alert('Skill assessment feature coming soon! This will help identify your strengths and areas for improvement.');
+}
+
+function completeProfile() {
+  alert('Profile completion wizard coming soon! This will help you build a comprehensive profile.');
+}
+
+function viewAllOpportunities() {
+  alert('Full opportunity browser coming soon! You\'ll be able to filter and search all available positions.');
+}
+
+function viewAllCareerPaths() {
+  alert('Career path explorer coming soon! Discover detailed career trajectories and requirements.');
+}
+
+function scheduleCareerConsultation() {
+  alert('Career consultation booking coming soon! Schedule one-on-one sessions with career advisors.');
+}
+
+function updateResume() {
+  alert('Resume builder coming soon! Create and update your resume with AI assistance.');
+}
+
+function searchInternships() {
+  alert('Internship search coming soon! Find internships that match your interests and skills.');
+}
+
+function improveSkill(skillName) {
+  alert(`Skill improvement plan for ${skillName} coming soon! Get personalized learning recommendations.`);
+}
+
+function viewOpportunity(title) {
+  alert(`Viewing ${title}. Detailed opportunity view coming soon!`);
+}
+
+function addToCalendar(eventTitle) {
+  alert(`Adding ${eventTitle} to calendar. Calendar integration coming soon!`);
+}
+
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new StudentDashboard();
+});

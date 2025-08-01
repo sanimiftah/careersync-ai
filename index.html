@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CareerSync AI - Where Talent Meets Opportunity</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+  <meta name="description" content="AI-powered career matching platform connecting students, career seekers, and HR departments">
+</head>
+<body class="bg-gray-50 font-sans leading-relaxed">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <div class="flex-shrink-0">
+            <h1 class="text-2xl font-bold text-blue-600">CareerSync AI</h1>
+          </div>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="#features" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+            <a href="pages/career-assessment.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Assessment</a>
+            <a href="#how-it-works" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">How It Works</a>
+            <a href="#about" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+            <button onclick="showLoginModal()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+              Sign In
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <button onclick="toggleMobileMenu()" class="text-gray-700 hover:text-blue-600 focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden bg-white border-t border-gray-200">
+      <div class="px-2 pt-2 pb-3 space-y-1">
+        <a href="#features" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Features</a>
+        <a href="pages/career-assessment.html" class="block px-3 py-2 text-gray-700 hover:text-blue-600">Assessment</a>
+        <a href="#how-it-works" class="block px-3 py-2 text-gray-700 hover:text-blue-600">How It Works</a>
+        <a href="#about" class="block px-3 py-2 text-gray-700 hover:text-blue-600">About</a>
+        <button onclick="showLoginModal()" class="block w-full text-left px-3 py-2 text-blue-600 font-medium">Sign In</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-r from-blue-50 to-green-50 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
+        Where Talent Meets
+        <span class="text-blue-600">Opportunity</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-700 mb-12 max-w-4xl mx-auto">
+        AI-powered career matching platform connecting university students, career seekers, and HR departments for smarter, faster, and more meaningful career connections.
+      </p>
+      
+      <!-- User Type Selection -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        
+        <!-- Student Card -->
+        <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onclick="goToStudentDashboard()">
+          <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">I'm a Student</h3>
+          <p class="text-gray-600 mb-6">Discover career paths, build skills, and find internships that match your interests and goals.</p>
+          <ul class="text-left space-y-2 text-gray-700">
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+              Career path recommendations
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+              Skill assessments
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
+              Internship matching
+            </li>
+          </ul>
+          <button onclick="event.stopPropagation(); goToStudentDashboard();" class="w-full mt-6 bg-green-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+            Get Started
+          </button>
+        </div>
+
+        <!-- Career Seeker Card -->
+        <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onclick="goToCareerDashboard()">
+          <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">I'm Job Seeking</h3>
+          <p class="text-gray-600 mb-6">Find your next career opportunity with AI-powered matching based on your skills and aspirations.</p>
+          <ul class="text-left space-y-2 text-gray-700">
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+              Smart job matching
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+              Career progression tracking
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
+              Salary insights
+            </li>
+          </ul>
+          <button onclick="event.stopPropagation(); goToCareerDashboard();" class="w-full mt-6 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            Find Opportunities
+          </button>
+        </div>
+
+        <!-- HR/Recruiter Card -->
+        <div class="bg-white rounded-xl shadow-lg p-8 border border-gray-200 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onclick="goToHRDashboard()">
+          <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-8 h-8 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">I'm Hiring</h3>
+          <p class="text-gray-600 mb-6">Discover top talent with AI-powered candidate matching and streamlined recruitment processes.</p>
+          <ul class="text-left space-y-2 text-gray-700">
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+              Candidate matching
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+              Talent pipeline
+            </li>
+            <li class="flex items-center">
+              <span class="w-2 h-2 bg-purple-500 rounded-full mr-3"></span>
+              Analytics dashboard
+            </li>
+          </ul>
+          <button onclick="event.stopPropagation(); goToHRDashboard();" class="w-full mt-6 bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
+            Find Talent
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-gray-900 mb-4">AI Matching Technology</h2>
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto">Our advanced matching algorithm considers skills, experience, cultural fit, and growth potential to create perfect career connections.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div class="text-center">
+          <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Smart Matching</h3>
+          <p class="text-gray-600">AI algorithms analyze skills, experience, and preferences to find perfect career matches with 95% accuracy.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Career Growth</h3>
+          <p class="text-gray-600">Personalized career path recommendations and skill development guidance to accelerate professional growth.</p>
+        </div>
+
+        <div class="text-center">
+          <div class="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">Industry Insights</h3>
+          <p class="text-gray-600">Real-time market data, salary trends, and industry analysis to make informed career decisions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Career Assessment CTA Section -->
+  <section class="py-16 bg-gradient-to-r from-purple-600 to-blue-600">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-4xl font-bold text-white mb-6">Discover Your Ideal Career Path</h2>
+      <p class="text-xl text-purple-100 mb-8 max-w-2xl mx-auto">
+        Take our comprehensive AI-powered career assessment to get personalized recommendations, salary insights, and a roadmap to your dream career.
+      </p>
+      <div class="flex items-center justify-center space-x-8 mb-8 text-purple-100">
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          15-20 minutes
+        </div>
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+          </svg>
+          Detailed Report
+        </div>
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+          </svg>
+          AI-Powered
+        </div>
+      </div>
+      <a href="pages/career-assessment.html" class="bg-white text-purple-600 px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors inline-block shadow-lg">
+        Take Free Assessment
+      </a>
+    </div>
+  </section>
+
+  <!-- Quick Links Section -->
+  <section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Explore Our Platform</h2>
+        <p class="text-xl text-gray-600">Discover all the tools and resources available to accelerate your career journey</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        
+        <!-- Career Paths -->
+        <a href="pages/career-paths.html" class="group block bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 00-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Career Paths</h3>
+          <p class="text-gray-600 text-sm">Explore detailed career information, salary insights, and growth opportunities</p>
+        </a>
+
+        <!-- Skills Development -->
+        <a href="pages/skills-development.html" class="group block bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Skills Development</h3>
+          <p class="text-gray-600 text-sm">Build new skills with personalized learning paths and track your progress</p>
+        </a>
+
+        <!-- Opportunities -->
+        <a href="pages/opportunities.html" class="group block bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Job Opportunities</h3>
+          <p class="text-gray-600 text-sm">Discover jobs, internships, and career opportunities that match your profile</p>
+        </a>
+
+        <!-- Career Assessment -->
+        <a href="pages/career-assessment.html" class="group block bg-gradient-to-br from-yellow-50 to-yellow-100 p-6 rounded-xl border border-yellow-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+          <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3 class="text-lg font-semibold text-gray-900 mb-2">Career Assessment</h3>
+          <p class="text-gray-600 text-sm">Take our AI-powered assessment to discover your ideal career path</p>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Login/Registration Modal -->
+  <div id="authModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+    <div class="bg-white rounded-xl p-8 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-900">Welcome to CareerSync AI</h2>
+        <button onclick="hideAuthModal()" class="text-gray-400 hover:text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div id="authContent">
+        <!-- Auth content will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1 md:col-span-2">
+          <h3 class="text-2xl font-bold mb-4">CareerSync AI</h3>
+          <p class="text-gray-400 mb-4">Where talent meets opportunity through AI-powered career matching.</p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">For Students</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Career Discovery</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Skill Assessment</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Internships</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">For Professionals</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">Job Matching</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Career Growth</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Salary Insights</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+        <p>&copy; 2025 CareerSync AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

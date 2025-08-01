@@ -1,0 +1,45 @@
+{
+  "name": "careersync-ai",
+  "version": "1.0.0",
+  "description": "AI-powered career matching platform connecting students, career seekers, and HR departments",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "serve": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'Build process for static site - no build needed'",
+    "test": "echo 'Tests coming soon'",
+    "deploy": "echo 'Ready for GitHub Pages deployment'"
+  },
+  "keywords": [
+    "career",
+    "ai",
+    "matching",
+    "students",
+    "hr",
+    "recruitment",
+    "jobs",
+    "internships",
+    "career-development"
+  ],
+  "author": "CareerSync AI Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/careersync-ai.git"
+  },
+  "bugs": {
+    "url": "https://github.com/username/careersync-ai/issues"
+  },
+  "homepage": "https://username.github.io/careersync-ai/",
+  "devDependencies": {},
+  "dependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

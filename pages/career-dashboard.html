@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Dashboard - CareerSync AI</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="../assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+  <!-- Navigation -->
+  <nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <a href="../index.html" class="text-2xl font-bold text-blue-600">CareerSync AI</a>
+        </div>
+        
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-4">
+            <a href="career-dashboard.html" class="text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+            <a href="opportunities.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Opportunities</a>
+            <a href="career-paths.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Career Paths</a>
+            <a href="skills-development.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+            <a href="career-assessment.html" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">Assessment</a>
+            <div class="relative">
+              <button onclick="toggleUserMenu()" class="flex items-center text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium">
+                <span id="userDisplayName">Professional</span>
+                <svg class="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div id="userMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                <a href="#profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                <a href="#settings" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Settings</a>
+                <button onclick="logout()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Welcome Section -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, <span id="professionalName">Professional</span>!</h1>
+      <p class="text-gray-600">Your personalized career advancement dashboard</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-blue-100">
+            <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745"></path>
+            </svg>
+          </div>
+          <div class="ml-4">
+            <p class="text-2xl font-bold text-gray-900" id="jobMatches">15</p>
+            <p class="text-gray-600">Job Matches</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-green-100">
+            <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+          </div>
+          <div class="ml-4">
+            <p class="text-2xl font-bold text-gray-900" id="applicationsSubmitted">8</p>
+            <p class="text-gray-600">Applications Submitted</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-purple-100">
+            <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+          </div>
+          <div class="ml-4">
+            <p class="text-2xl font-bold text-gray-900" id="interviewInvites">3</p>
+            <p class="text-gray-600">Interview Invites</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+        <div class="flex items-center">
+          <div class="p-3 rounded-full bg-yellow-100">
+            <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </div>
+          <div class="ml-4">
+            <p class="text-2xl font-bold text-gray-900" id="profileViews">127</p>
+            <p class="text-gray-600">Profile Views</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      
+      <!-- Left Column -->
+      <div class="lg:col-span-2 space-y-8">
+        
+        <!-- Top Job Matches -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-900">Top Job Matches</h2>
+            <button onclick="viewAllJobs()" class="text-blue-600 hover:text-blue-700 text-sm font-medium">View All</button>
+          </div>
+          
+          <div class="space-y-4" id="jobMatchesList">
+            <!-- Job matches will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Application Status -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-xl font-bold text-gray-900">Application Status</h2>
+            <button onclick="manageApplications()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
+              Manage Applications
+            </button>
+          </div>
+          
+          <div class="space-y-4" id="applicationsList">
+            <!-- Applications will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Skill Development -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900 mb-6">Skill Development Progress</h2>
+          <div class="space-y-4" id="skillProgress">
+            <!-- Skills will be loaded here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="space-y-8">
+        
+        <!-- Career Growth Insights -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Career Growth Insights</h2>
+          <div class="space-y-4">
+            <div class="p-4 bg-blue-50 rounded-lg">
+              <h3 class="font-semibold text-blue-900">Salary Potential</h3>
+              <p class="text-sm text-blue-700">+15% increase possible with current skills</p>
+              <p class="text-lg font-bold text-blue-900">$95,000 - $115,000</p>
+            </div>
+            <div class="p-4 bg-green-50 rounded-lg">
+              <h3 class="font-semibold text-green-900">Next Career Step</h3>
+              <p class="text-sm text-green-700">Senior Developer positions available</p>
+              <p class="text-sm text-green-600">Based on your experience profile</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interview Preparation -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-bold text-gray-900">Upcoming Interviews</h2>
+          </div>
+          <div class="space-y-3" id="upcomingInterviews">
+            <!-- Interviews will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Market Insights -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Market Insights</h2>
+          <div class="space-y-3" id="marketInsights">
+            <!-- Market data will be loaded here -->
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+          <h2 class="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
+          <div class="space-y-3">
+            <button onclick="updateResume()" class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-blue-700">
+              Update Resume
+            </button>
+            <button onclick="practiceInterview()" class="w-full bg-green-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-green-700">
+              Practice Interview
+            </button>
+            <button onclick="networkingEvents()" class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-purple-700">
+              Find Networking Events
+            </button>
+            <button onclick="salaryNegotiation()" class="w-full bg-yellow-600 text-white py-2 px-4 rounded-lg text-sm font-medium hover:bg-yellow-700">
+              Salary Negotiation Tips
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="../assets/js/main.js"></script>
+  <script src="../assets/js/career-dashboard.js"></script>
+</body>
+</html>

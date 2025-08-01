@@ -1,0 +1,438 @@
+// HR Dashboard JavaScript
+
+class HRDashboard {
+  constructor() {
+    this.currentUser = JSON.parse(localStorage.getItem('careersync_user'));
+    this.init();
+  }
+
+  init() {
+    this.checkAuthentication();
+    this.loadUserData();
+    this.loadDashboardData();
+    this.setupEventListeners();
+  }
+
+  checkAuthentication() {
+    if (this.currentUser && this.currentUser.type !== 'hr') {
+      window.location.href = '../index.html';
+      return;
+    }
+  }
+
+  loadUserData() {
+    const displayName = document.getElementById('userDisplayName');
+    const hrName = document.getElementById('hrName');
+    
+    if (displayName) {
+      displayName.textContent = this.currentUser.firstName;
+    }
+    if (hrName) {
+      hrName.textContent = this.currentUser.firstName;
+    }
+  }
+
+  loadDashboardData() {
+    this.loadCandidateMatches();
+    this.loadAnalytics();
+    this.loadRecentActivity();
+    this.loadActivePositions();
+    this.loadTodaysInterviews();
+    this.loadTalentPipeline();
+    this.updateStats();
+  }
+
+  loadCandidateMatches() {
+    const container = document.getElementById('candidateMatchesList');
+    const candidates = [
+      {
+        name: 'Sarah Johnson',
+        title: 'Senior Software Engineer',
+        experience: '5 years',
+        match: 96,
+        skills: ['React', 'Node.js', 'AWS', 'Python'],
+        location: 'San Francisco, CA',
+        availability: 'Available',
+        salary: '$130,000',
+        position: 'Senior Frontend Developer'
+      },
+      {
+        name: 'Michael Chen',
+        title: 'Full Stack Developer',
+        experience: '3 years',
+        match: 91,
+        skills: ['Vue.js', 'Django', 'PostgreSQL', 'Docker'],
+        location: 'Remote',
+        availability: '2 weeks notice',
+        salary: '$110,000',
+        position: 'Full Stack Developer'
+      },
+      {
+        name: 'Emily Rodriguez',
+        title: 'Product Manager',
+        experience: '4 years',
+        match: 88,
+        skills: ['Product Strategy', 'Agile', 'Analytics', 'Leadership'],
+        location: 'New York, NY',
+        availability: 'Available',
+        salary: '$125,000',
+        position: 'Senior Product Manager'
+      }
+    ];
+
+    container.innerHTML = candidates.map(candidate => `
+      <div class="p-4 border border-gray-200 rounded-lg hover:border-purple-500 transition-colors cursor-pointer" onclick="viewCandidateProfile('${candidate.name}')">
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <div class="flex items-center space-x-2 mb-2">
+              <h3 class="font-semibold text-gray-900">${candidate.name}</h3>
+              <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${candidate.match}% Match</span>
+              <span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">${candidate.availability}</span>
+            </div>
+            <p class="text-sm text-gray-600 mb-1">${candidate.title} • ${candidate.experience} experience</p>
+            <p class="text-sm text-gray-600 mb-2">${candidate.location} • ${candidate.salary} expected</p>
+            <p class="text-sm font-medium text-purple-600 mb-2">Best fit for: ${candidate.position}</p>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${candidate.skills.slice(0, 4).map(skill => `<span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">${skill}</span>`).join('')}
+              ${candidate.skills.length > 4 ? `<span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">+${candidate.skills.length - 4} more</span>` : ''}
+            </div>
+            <div class="flex space-x-2 mt-2">
+              <button onclick="event.stopPropagation(); contactCandidate('${candidate.name}')" class="bg-purple-600 text-white px-3 py-1 rounded text-xs hover:bg-purple-700">
+                Contact
+              </button>
+              <button onclick="event.stopPropagation(); scheduleInterview('${candidate.name}')" class="bg-green-600 text-white px-3 py-1 rounded text-xs hover:bg-green-700">
+                Schedule Interview
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadAnalytics() {
+    const container = document.getElementById('analyticsData');
+    const analytics = [
+      {
+        title: 'Time to Hire',
+        value: '18 days',
+        change: '-15%',
+        trend: 'down',
+        description: 'Average hiring process duration'
+      },
+      {
+        title: 'Cost per Hire',
+        value: '$4,200',
+        change: '-8%',
+        trend: 'down',
+        description: 'Including sourcing and interviewing'
+      },
+      {
+        title: 'Offer Acceptance Rate',
+        value: '85%',
+        change: '+12%',
+        trend: 'up',
+        description: 'Candidates accepting job offers'
+      },
+      {
+        title: 'Quality of Hire Score',
+        value: '4.2/5',
+        change: '+0.3',
+        trend: 'up',
+        description: 'Based on 90-day performance reviews'
+      }
+    ];
+
+    container.innerHTML = analytics.map(metric => `
+      <div class="p-4 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="font-medium text-gray-900">${metric.title}</h4>
+          <span class="flex items-center text-sm ${metric.trend === 'up' ? 'text-green-600' : 'text-red-600'}">
+            ${metric.change}
+            <svg class="w-4 h-4 ml-1 ${metric.trend === 'down' ? 'transform rotate-180' : ''}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+          </span>
+        </div>
+        <p class="text-2xl font-bold text-gray-900 mb-1">${metric.value}</p>
+        <p class="text-xs text-gray-600">${metric.description}</p>
+      </div>
+    `).join('');
+  }
+
+  loadRecentActivity() {
+    const container = document.getElementById('recentActivity');
+    const activities = [
+      {
+        type: 'hire',
+        title: 'Sarah Johnson hired as Senior Frontend Developer',
+        description: 'Completed onboarding process',
+        time: '2 hours ago',
+        iconType: 'check'
+      },
+      {
+        type: 'interview',
+        title: 'Interview scheduled with Michael Chen',
+        description: 'Technical interview for Full Stack position',
+        time: '4 hours ago',
+        iconType: 'calendar'
+      },
+      {
+        type: 'application',
+        title: '12 new applications received',
+        description: 'For Software Engineer and Product Manager roles',
+        time: '1 day ago',
+        iconType: 'document'
+      },
+      {
+        type: 'position',
+        title: 'New position posted: Data Scientist',
+        description: 'Senior level, Machine Learning focus',
+        time: '2 days ago',
+        iconType: 'briefcase'
+      }
+    ];
+
+    const iconPaths = {
+      check: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+      calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+      document: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+      briefcase: 'M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0V6a2 2 0 012 2v6a2 2 0 01-2 2H8a2 2 0 01-2-2V8a2 2 0 012-2V6'
+    };
+
+    container.innerHTML = activities.map(activity => `
+      <div class="flex items-start space-x-3 p-3 hover:bg-gray-50 rounded-lg">
+        <div class="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+          <svg class="w-4 h-4 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPaths[activity.iconType]}"></path>
+          </svg>
+        </div>
+        <div class="flex-1">
+          <h4 class="font-medium text-gray-900">${activity.title}</h4>
+          <p class="text-sm text-gray-600">${activity.description}</p>
+          <p class="text-xs text-gray-400 mt-1">${activity.time}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadActivePositions() {
+    const container = document.getElementById('activePositionsList');
+    const positions = [
+      {
+        title: 'Senior Frontend Developer',
+        applications: 45,
+        status: 'Active',
+        daysOpen: 12,
+        priority: 'High'
+      },
+      {
+        title: 'Full Stack Developer',
+        applications: 32,
+        status: 'Active',
+        daysOpen: 8,
+        priority: 'Medium'
+      },
+      {
+        title: 'Product Manager',
+        applications: 28,
+        status: 'Active',
+        daysOpen: 15,
+        priority: 'High'
+      },
+      {
+        title: 'Data Scientist',
+        applications: 19,
+        status: 'New',
+        daysOpen: 3,
+        priority: 'Medium'
+      }
+    ];
+
+    container.innerHTML = positions.map(position => `
+      <div class="p-3 border border-gray-200 rounded-lg hover:border-purple-500 cursor-pointer" onclick="viewPosition('${position.title}')">
+        <div class="flex items-center justify-between mb-1">
+          <h4 class="font-medium text-gray-900 text-sm">${position.title}</h4>
+          <span class="bg-${position.priority === 'High' ? 'red' : 'yellow'}-100 text-${position.priority === 'High' ? 'red' : 'yellow'}-800 text-xs px-2 py-1 rounded">${position.priority}</span>
+        </div>
+        <div class="text-xs text-gray-600">
+          <p>${position.applications} applications • Open ${position.daysOpen} days</p>
+          <p class="mt-1">Status: <span class="font-medium">${position.status}</span></p>
+        </div>
+        <div class="mt-2 flex space-x-2">
+          <button onclick="event.stopPropagation(); viewApplications('${position.title}')" class="text-xs text-purple-600 hover:text-purple-700">View Applications</button>
+          <button onclick="event.stopPropagation(); editPosition('${position.title}')" class="text-xs text-blue-600 hover:text-blue-700">Edit</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadTodaysInterviews() {
+    const container = document.getElementById('todaysInterviews');
+    const interviews = [
+      {
+        candidate: 'Michael Chen',
+        position: 'Full Stack Developer',
+        time: '10:00 AM',
+        interviewer: 'John Smith',
+        type: 'Technical'
+      },
+      {
+        candidate: 'Emily Rodriguez',
+        position: 'Product Manager',
+        time: '2:00 PM',
+        interviewer: 'Lisa Wang',
+        type: 'Behavioral'
+      },
+      {
+        candidate: 'David Kim',
+        position: 'Data Scientist',
+        time: '4:00 PM',
+        interviewer: 'Mark Johnson',
+        type: 'Case Study'
+      }
+    ];
+
+    container.innerHTML = interviews.map(interview => `
+      <div class="p-3 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between mb-1">
+          <h4 class="font-medium text-gray-900 text-sm">${interview.candidate}</h4>
+          <span class="text-xs text-gray-500">${interview.time}</span>
+        </div>
+        <div class="text-xs text-gray-600">
+          <p>${interview.position}</p>
+          <p>${interview.type} with ${interview.interviewer}</p>
+        </div>
+        <div class="mt-2 flex space-x-2">
+          <button onclick="joinInterview('${interview.candidate}')" class="text-xs text-green-600 hover:text-green-700">Join</button>
+          <button onclick="rescheduleInterview('${interview.candidate}')" class="text-xs text-blue-600 hover:text-blue-700">Reschedule</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadTalentPipeline() {
+    const container = document.getElementById('talentPipeline');
+    const pipeline = [
+      {
+        stage: 'Sourced',
+        count: 156,
+        color: 'blue'
+      },
+      {
+        stage: 'Screening',
+        count: 89,
+        color: 'yellow'
+      },
+      {
+        stage: 'Interview',
+        count: 34,
+        color: 'purple'
+      },
+      {
+        stage: 'Offer',
+        count: 12,
+        color: 'green'
+      }
+    ];
+
+    container.innerHTML = pipeline.map(stage => `
+      <div class="flex items-center justify-between p-3 bg-${stage.color}-50 rounded-lg">
+        <div>
+          <h4 class="font-medium text-${stage.color}-900">${stage.stage}</h4>
+          <p class="text-sm text-${stage.color}-700">${stage.count} candidates</p>
+        </div>
+        <div class="w-8 h-8 bg-${stage.color}-200 rounded-full flex items-center justify-center">
+          <span class="text-sm font-bold text-${stage.color}-800">${stage.count}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  updateStats() {
+    document.getElementById('activePositions').textContent = '12';
+    document.getElementById('candidateApplications').textContent = '247';
+    document.getElementById('scheduledInterviews').textContent = '18';
+    document.getElementById('hiredCandidates').textContent = '8';
+  }
+
+  setupEventListeners() {
+    // Add event listeners for dashboard interactions
+  }
+}
+
+// Global Functions for onclick handlers
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.classList.toggle('hidden');
+}
+
+function logout() {
+  localStorage.removeItem('careersync_user');
+  window.location.href = '../index.html';
+}
+
+function viewCandidateProfile(candidateName) {
+  alert(`Viewing profile for ${candidateName}. Detailed candidate profiles coming soon!`);
+}
+
+function contactCandidate(candidateName) {
+  alert(`Contacting ${candidateName}. Integrated communication system coming soon!`);
+}
+
+function scheduleInterview(candidateName) {
+  if (candidateName) {
+    alert(`Scheduling interview with ${candidateName}. Interview scheduling system coming soon!`);
+  } else {
+    alert('Interview scheduling system coming soon! Integrated calendar and automated notifications.');
+  }
+}
+
+function viewAllCandidates() {
+  alert('Full candidate database coming soon! Advanced search and filtering capabilities.');
+}
+
+function viewDetailedAnalytics() {
+  alert('Comprehensive analytics dashboard coming soon! Detailed insights and custom reports.');
+}
+
+function createNewPosition() {
+  alert('Job posting wizard coming soon! Create and publish new positions with ease.');
+}
+
+function viewPosition(positionTitle) {
+  alert(`Viewing ${positionTitle} position details. Position management system coming soon!`);
+}
+
+function viewApplications(positionTitle) {
+  alert(`Viewing applications for ${positionTitle}. Application review system coming soon!`);
+}
+
+function editPosition(positionTitle) {
+  alert(`Editing ${positionTitle} position. Position editor coming soon!`);
+}
+
+function joinInterview(candidateName) {
+  alert(`Joining interview with ${candidateName}. Video interview integration coming soon!`);
+}
+
+function rescheduleInterview(candidateName) {
+  alert(`Rescheduling interview with ${candidateName}. Interview management coming soon!`);
+}
+
+function postNewJob() {
+  alert('Job posting system coming soon! Create compelling job descriptions with AI assistance.');
+}
+
+function reviewApplications() {
+  alert('Application review dashboard coming soon! Streamlined candidate evaluation.');
+}
+
+function talentSearch() {
+  alert('Talent search engine coming soon! Find candidates based on skills, experience, and more.');
+}
+
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new HRDashboard();
+});

@@ -1,0 +1,372 @@
+// Career Seeker Dashboard JavaScript
+
+class CareerDashboard {
+  constructor() {
+    this.currentUser = JSON.parse(localStorage.getItem('careersync_user')) || this.createDemoUser('career');
+    this.init();
+  }
+
+  init() {
+    this.checkAuthentication();
+    this.loadUserData();
+    this.loadDashboardData();
+    this.setupEventListeners();
+  }
+
+
+  createDemoUser(type) {
+    return {
+      id: Date.now(),
+      name: type === 'student' ? 'Demo Student' : type === 'career' ? 'Demo Job Seeker' : 'Demo HR Manager',
+      email: `demo.${type}@careersync.ai`,
+      type: type,
+      avatar: 'https://via.placeholder.com/150'
+    };
+  }
+  
+  checkAuthentication() {
+    if (this.currentUser && this.currentUser.type !== 'career') {
+      window.location.href = '../index.html';
+      return;
+    }
+  }
+
+  loadUserData() {
+    const displayName = document.getElementById('userDisplayName');
+    const professionalName = document.getElementById('professionalName');
+    
+    if (displayName) {
+      displayName.textContent = this.currentUser.firstName;
+    }
+    if (professionalName) {
+      professionalName.textContent = this.currentUser.firstName;
+    }
+  }
+
+  loadDashboardData() {
+    this.loadJobMatches();
+    this.loadApplications();
+    this.loadSkillProgress();
+    this.loadUpcomingInterviews();
+    this.loadMarketInsights();
+    this.updateStats();
+  }
+
+  loadJobMatches() {
+    const container = document.getElementById('jobMatchesList');
+    const jobMatches = [
+      {
+        title: 'Senior Software Engineer',
+        company: 'TechCorp Inc.',
+        location: 'San Francisco, CA',
+        salary: '$120,000 - $150,000',
+        match: 96,
+        posted: '2 days ago',
+        type: 'Full-time',
+        skills: ['React', 'Node.js', 'AWS'],
+        remote: true
+      },
+      {
+        title: 'Full Stack Developer',
+        company: 'StartupXYZ',
+        location: 'New York, NY',
+        salary: '$100,000 - $130,000',
+        match: 89,
+        posted: '1 week ago',
+        type: 'Full-time',
+        skills: ['Python', 'Django', 'PostgreSQL'],
+        remote: false
+      },
+      {
+        title: 'Lead Frontend Developer',
+        company: 'DesignStudio',
+        location: 'Remote',
+        salary: '$110,000 - $140,000',
+        match: 85,
+        posted: '3 days ago',
+        type: 'Full-time',
+        skills: ['Vue.js', 'TypeScript', 'CSS'],
+        remote: true
+      }
+    ];
+
+    container.innerHTML = jobMatches.map(job => `
+      <div class="p-4 border border-gray-200 rounded-lg hover:border-blue-500 transition-colors cursor-pointer" onclick="viewJobDetails('${job.title}', '${job.company}')">
+        <div class="flex items-start justify-between">
+          <div class="flex-1">
+            <div class="flex items-center space-x-2 mb-2">
+              <h3 class="font-semibold text-gray-900">${job.title}</h3>
+              <span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded">${job.match}% Match</span>
+              ${job.remote ? '<span class="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Remote</span>' : ''}
+            </div>
+            <p class="text-sm text-gray-600 mb-1">${job.company} • ${job.location}</p>
+            <p class="text-sm font-medium text-gray-900 mb-2">${job.salary}</p>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${job.skills.map(skill => `<span class="bg-gray-100 text-gray-700 text-xs px-2 py-1 rounded">${skill}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between text-xs text-gray-500">
+              <span>${job.type} • Posted ${job.posted}</span>
+              <button onclick="event.stopPropagation(); applyToJob('${job.title}', '${job.company}')" class="bg-blue-600 text-white px-3 py-1 rounded text-xs hover:bg-blue-700">
+                Quick Apply
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadApplications() {
+    const container = document.getElementById('applicationsList');
+    const applications = [
+      {
+        position: 'Software Engineer',
+        company: 'Google',
+        status: 'Interview Scheduled',
+        statusColor: 'green',
+        appliedDate: '1 week ago',
+        nextStep: 'Technical Interview - Tomorrow 2:00 PM'
+      },
+      {
+        position: 'Frontend Developer',
+        company: 'Facebook',
+        status: 'Under Review',
+        statusColor: 'yellow',
+        appliedDate: '2 weeks ago',
+        nextStep: 'Waiting for response'
+      },
+      {
+        position: 'Full Stack Developer',
+        company: 'Netflix',
+        status: 'Application Submitted',
+        statusColor: 'blue',
+        appliedDate: '3 days ago',
+        nextStep: 'Initial screening pending'
+      },
+      {
+        position: 'Backend Engineer',
+        company: 'Uber',
+        status: 'Not Selected',
+        statusColor: 'red',
+        appliedDate: '1 month ago',
+        nextStep: 'Consider reapplying in 6 months'
+      }
+    ];
+
+    container.innerHTML = applications.map(app => `
+      <div class="p-4 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between mb-2">
+          <div>
+            <h4 class="font-medium text-gray-900">${app.position}</h4>
+            <p class="text-sm text-gray-600">${app.company}</p>
+          </div>
+          <span class="bg-${app.statusColor}-100 text-${app.statusColor}-800 text-xs px-2 py-1 rounded">${app.status}</span>
+        </div>
+        <div class="text-sm text-gray-600">
+          <p>Applied: ${app.appliedDate}</p>
+          <p class="mt-1 font-medium">${app.nextStep}</p>
+        </div>
+        <div class="mt-3 flex space-x-2">
+          <button onclick="viewApplication('${app.position}', '${app.company}')" class="text-xs text-blue-600 hover:text-blue-700">View Details</button>
+          ${app.status === 'Interview Scheduled' ? '<button onclick="prepareInterview()" class="text-xs text-green-600 hover:text-green-700">Prepare for Interview</button>' : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadSkillProgress() {
+    const container = document.getElementById('skillProgress');
+    const skills = [
+      {
+        name: 'React.js',
+        current: 85,
+        target: 95,
+        marketDemand: 'High',
+        recommendation: 'Focus on advanced patterns and testing'
+      },
+      {
+        name: 'Node.js',
+        current: 75,
+        target: 90,
+        marketDemand: 'High',
+        recommendation: 'Learn microservices architecture'
+      },
+      {
+        name: 'AWS',
+        current: 60,
+        target: 80,
+        marketDemand: 'Very High',
+        recommendation: 'Get AWS certification'
+      },
+      {
+        name: 'Leadership',
+        current: 45,
+        target: 70,
+        marketDemand: 'High',
+        recommendation: 'Take leadership training course'
+      }
+    ];
+
+    container.innerHTML = skills.map(skill => `
+      <div class="p-4 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="font-medium text-gray-900">${skill.name}</h4>
+          <span class="text-sm text-gray-600">${skill.current}% / ${skill.target}%</span>
+        </div>
+        <div class="progress-bar mb-2">
+          <div class="progress-fill" style="width: ${skill.current}%"></div>
+        </div>
+        <div class="text-xs text-gray-600">
+          <p class="mb-1">Market Demand: <span class="font-medium ${skill.marketDemand === 'Very High' ? 'text-red-600' : skill.marketDemand === 'High' ? 'text-orange-600' : 'text-yellow-600'}">${skill.marketDemand}</span></p>
+          <p>${skill.recommendation}</p>
+        </div>
+        <button onclick="improveSkill('${skill.name}')" class="mt-2 text-xs text-blue-600 hover:text-blue-700">Start Learning</button>
+      </div>
+    `).join('');
+  }
+
+  loadUpcomingInterviews() {
+    const container = document.getElementById('upcomingInterviews');
+    const interviews = [
+      {
+        company: 'Google',
+        position: 'Software Engineer',
+        date: 'Tomorrow',
+        time: '2:00 PM',
+        type: 'Technical Interview',
+        interviewer: 'Sarah Chen'
+      },
+      {
+        company: 'Microsoft',
+        position: 'Frontend Developer',
+        date: 'Friday',
+        time: '10:00 AM',
+        type: 'System Design',
+        interviewer: 'David Kim'
+      }
+    ];
+
+    container.innerHTML = interviews.map(interview => `
+      <div class="p-3 border border-gray-200 rounded-lg">
+        <h4 class="font-medium text-gray-900 text-sm">${interview.company}</h4>
+        <p class="text-xs text-gray-600">${interview.position}</p>
+        <div class="text-xs text-gray-600 mt-1">
+          <p>${interview.date} at ${interview.time}</p>
+          <p>${interview.type} with ${interview.interviewer}</p>
+        </div>
+        <div class="mt-2 space-x-2">
+          <button onclick="prepareInterview('${interview.company}')" class="text-xs text-blue-600 hover:text-blue-700">Prepare</button>
+          <button onclick="addToCalendar('${interview.company} Interview')" class="text-xs text-green-600 hover:text-green-700">Add to Calendar</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadMarketInsights() {
+    const container = document.getElementById('marketInsights');
+    const insights = [
+      {
+        title: 'Remote Work Trend',
+        description: '78% of new positions offer remote options',
+        trend: 'up'
+      },
+      {
+        title: 'Salary Growth',
+        description: 'Average 12% increase in tech salaries',
+        trend: 'up'
+      },
+      {
+        title: 'Skills in Demand',
+        description: 'React, AWS, and Python top the list',
+        trend: 'stable'
+      }
+    ];
+
+    container.innerHTML = insights.map(insight => `
+      <div class="p-3 border border-gray-200 rounded-lg">
+        <div class="flex items-center justify-between">
+          <h4 class="font-medium text-gray-900 text-sm">${insight.title}</h4>
+          <svg class="w-4 h-4 ${insight.trend === 'up' ? 'text-green-600' : 'text-gray-400'}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+          </svg>
+        </div>
+        <p class="text-xs text-gray-600 mt-1">${insight.description}</p>
+      </div>
+    `).join('');
+  }
+
+  updateStats() {
+    document.getElementById('jobMatches').textContent = '15';
+    document.getElementById('applicationsSubmitted').textContent = '8';
+    document.getElementById('interviewInvites').textContent = '3';
+    document.getElementById('profileViews').textContent = '127';
+  }
+
+  setupEventListeners() {
+    // Add event listeners for dashboard interactions
+  }
+}
+
+// Global Functions for onclick handlers
+function toggleUserMenu() {
+  const menu = document.getElementById('userMenu');
+  menu.classList.toggle('hidden');
+}
+
+function logout() {
+  localStorage.removeItem('careersync_user');
+  window.location.href = '../index.html';
+}
+
+function viewJobDetails(title, company) {
+  window.location.href = 'opportunities.html';
+}
+
+function applyToJob(title, company) {
+  window.location.href = 'opportunities.html';
+}
+
+function viewAllJobs() {
+  window.location.href = 'opportunities.html';
+}
+
+function manageApplications() {
+  window.location.href = 'opportunities.html';
+}
+
+function viewApplication(position, company) {
+  window.location.href = 'opportunities.html';
+}
+
+function prepareInterview(company) {
+  window.location.href = 'career-assessment.html';
+}
+
+function updateResume() {
+  window.location.href = 'career-paths.html';
+}
+
+function practiceInterview() {
+  alert('Mock interview system coming soon! Practice with AI interviewer and get feedback.');
+}
+
+function networkingEvents() {
+  alert('Networking events finder coming soon! Discover industry events and meetups.');
+}
+
+function salaryNegotiation() {
+  alert('Salary negotiation guide coming soon! Tips and strategies for better compensation.');
+}
+
+function improveSkill(skillName) {
+  alert(`Skill improvement plan for ${skillName} coming soon! Personalized learning paths and resources.`);
+}
+
+function addToCalendar(eventTitle) {
+  alert(`Adding ${eventTitle} to calendar. Calendar integration coming soon!`);
+}
+
+// Initialize dashboard when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  new CareerDashboard();
+});
