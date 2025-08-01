@@ -47,7 +47,20 @@ CareerSync AI is a comprehensive career matching platform that uses artificial i
 - **Icons**: Heroicons for consistent and beautiful SVG iconography
 - **Deployment**: GitHub Pages ready with PWA capabilities
 
+## 🚀 Live Demo
+
+**Experience CareerSync AI now:** [https://sanimiftah.github.io/careersync-ai/](https://sanimiftah.github.io/careersync-ai/)
+
+Try the platform directly in your browser - no installation required! Test all features including career assessment, job matching, and dashboard functionalities across different user types.
+
 ## Quick Start
+
+### Option 1: Try Online (Recommended)
+Visit the live demo: **[https://sanimiftah.github.io/careersync-ai/](https://sanimiftah.github.io/careersync-ai/)**
+
+### Option 2: Run Locally
+
+### Option 2: Run Locally
 
 1. **Clone the repository**
    ```bash
